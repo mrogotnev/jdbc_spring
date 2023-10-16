@@ -7,13 +7,19 @@ import com.mrogotnev.jdbc_jpa_spring.mappers.EmplOnAllPrjDtoMapper;
 import com.mrogotnev.jdbc_jpa_spring.mappers.EmployeeMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedCaseInsensitiveMap;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @AllArgsConstructor
@@ -21,26 +27,27 @@ public class EmployeeDao {
     private JdbcTemplate jdbcTemplate;
 
     public List<Employee> getAllWorkers() {
-        return jdbcTemplate.query("SELECT id_employee, first_name, second_name, job_title FROM jdbc_schema.employees", new EmployeeMapper());
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("get_all_employee");
+        Map<String, Object> out = simpleJdbcCall.execute();
+        return (List<Employee>) out.get("#result-set-1");
     }
 
     public Employee readEmployee(int id) {
-        return jdbcTemplate.query("SELECT * FROM jdbc_schema.employees WHERE id_employee=?", new Object[]{id}, new EmployeeMapper())
-                .stream().findAny().orElse(null);
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("read_employee")
+                .returningResultSet("employees", new EmployeeMapper());
+        Map<String, Object> out = simpleJdbcCall.execute(
+                new MapSqlParameterSource("id_empl", id));
+        List<Employee> employees = (List<Employee>) out.get("employees");
+        return employees.get(0);
     }
 
     public int createEmployee(Employee employee) {
-        KeyHolder generatedKeyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO jdbc_schema.employees (first_name, second_name, job_title) VALUES (?, ?, ?);";
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection
-                    .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, employee.getFirstName());
-            ps.setString(2, employee.getLastName());
-            ps.setString(3, employee.getJobTitle().name());
-            return ps;
-        }, generatedKeyHolder);
-        return generatedKeyHolder.getKey().intValue();
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("create_employee");
+        Map<String, Object> out = simpleJdbcCall.execute(
+                new MapSqlParameterSource("first_name_empl", employee.getFirstName())
+                        .addValue("second_name_empl", employee.getLastName())
+                        .addValue("job_title_empl", employee.getJobTitle()));
+        return (int) out.get("id_employee_empl");
     }
 
     public void updateEmployee(int id, Employee employee) {

@@ -11,4 +11,8 @@ public class Employee extends Person {
         super(id, firstName, lastName);
         this.jobTitle = jobTitle;
     }
+
+    public Employee() {
+
+    }
 }
