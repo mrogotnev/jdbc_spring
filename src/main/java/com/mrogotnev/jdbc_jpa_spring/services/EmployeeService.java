@@ -33,7 +33,7 @@ public class EmployeeService {
         employeeDao.deleteEmployee(id);
     }
 
-    public Employee readEmployeeWithTitle(JobTitle title) {
+    public List<Employee> readEmployeeWithTitle(JobTitle title) {
         return employeeDao.readEmployeeWithTitle(title);
     }
     public List<EmplOnAllPrjDto> getEmplOnAllPrjDto (int emplId) {

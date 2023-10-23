@@ -4,6 +4,3 @@ BEGIN
 	INSERT INTO jdbc_schema.employees (first_name, second_name, job_title) VALUES (first_name_empl, second_name_empl, job_title_empl);
 	SELECT LAST_INSERT_ID() INTO id_employee_empl;
 END\\
-
-CALL create_employee('lal', 'lal2', 'Admin', @some);
-SELECT @some;

@@ -25,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/readEmployeeWithTitle/{title}")
-    public Employee readEmployee(@PathVariable JobTitle title) {
+    public List<Employee> readEmployee(@PathVariable JobTitle title) {
         return employeeService.readEmployeeWithTitle(title);
     }
 
