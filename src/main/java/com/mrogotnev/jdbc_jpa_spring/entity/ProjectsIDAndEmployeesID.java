@@ -2,8 +2,6 @@ package com.mrogotnev.jdbc_jpa_spring.entity;
 
 import lombok.Data;
 
-import java.util.Map;
-
 @Data
 public class ProjectsIDAndEmployeesID {
     private Integer projectId;

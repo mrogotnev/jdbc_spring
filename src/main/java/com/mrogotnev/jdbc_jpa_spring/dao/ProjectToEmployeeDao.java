@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class JdbcProjectToEmployeeDao {
+public class ProjectToEmployeeDao {
     JdbcTemplate jdbcTemplate;
 
     public List<ProjectsIDAndEmployeesID> getAllProjectsIdAndEmployeeID() {

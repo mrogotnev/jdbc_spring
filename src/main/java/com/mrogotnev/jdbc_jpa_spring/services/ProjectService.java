@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class JdbcProjectService {
+public class ProjectService {
     private ProjectDao projectDao;
 
     public List<Project> getAllProjects() {
