@@ -11,9 +11,6 @@ public class EmplOnAllPrjDtoMapper implements RowMapper<EmplOnAllPrjDto> {
     public EmplOnAllPrjDto mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new EmplOnAllPrjDto(
                 rs.getInt("id_employee"),
-                rs.getString("first_name"),
-                rs.getString("second_name"),
-                rs.getString("job_title"),
                 rs.getInt("id_project"),
                 rs.getString("prj_name"),
                 rs.getBoolean("prj_status")

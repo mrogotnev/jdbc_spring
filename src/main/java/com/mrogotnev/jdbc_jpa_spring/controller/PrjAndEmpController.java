@@ -1,6 +1,5 @@
 package com.mrogotnev.jdbc_jpa_spring.controller;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mrogotnev.jdbc_jpa_spring.entity.ProjectsIDAndEmployeesID;
 import com.mrogotnev.jdbc_jpa_spring.services.PrjAndEmplService;
 import lombok.AllArgsConstructor;
@@ -26,14 +25,6 @@ public class PrjAndEmpController {
     @PostMapping(value = "/createPrjAndEmpl", consumes = {"application/json"})
     public void createPrjAndEmpl(@RequestBody ProjectsIDAndEmployeesID projectsIDAndEmployeesID) {
         prjAndEmplService.createPrjIdAndAllEmpl(projectsIDAndEmployeesID);
-    }
-
-    @PutMapping("/updatePrjAndEmpl")
-    public void updatePrjAndEmpl(@RequestBody ObjectNode json) {
-        ProjectsIDAndEmployeesID projectsIDAndEmployeesID = new ProjectsIDAndEmployeesID(json.get("new_project_id").asInt(),
-                json.get("new_employee_id").asInt());
-        prjAndEmplService.updatePrjIdAndAllEmpl(json.get("old_project_id").asInt(), json.get("old_employee_id").asInt(),
-                projectsIDAndEmployeesID);
     }
 
     @DeleteMapping(value = "/deletePrjAndEmpl", consumes = {"application/json"})

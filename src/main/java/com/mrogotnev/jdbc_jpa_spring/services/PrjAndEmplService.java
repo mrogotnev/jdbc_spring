@@ -23,10 +23,6 @@ public class PrjAndEmplService {
         projectToEmployeeDao.createPrjIdAndAllEmpl(projectsIDAndEmployeesID);
     }
 
-    public void updatePrjIdAndAllEmpl(int prjId, int emplId, ProjectsIDAndEmployeesID projectsIDAndEmployeesID) {
-        projectToEmployeeDao.updatePrjIdAndAllEmpl(prjId, emplId, projectsIDAndEmployeesID);
-    }
-
     public void deletePrjIdAndAllEmpl(int prjId, int emplId) {
         projectToEmployeeDao.deletePrjIdAndAllEmpl(prjId, emplId);
     }

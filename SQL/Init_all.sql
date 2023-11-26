@@ -133,4 +133,5 @@ BEGIN
     WHERE id_employee = id_empl;
 END\\  
 
+SET SQL_SAFE_UPDATES = 0;
 CALL delete_then_init_data();
